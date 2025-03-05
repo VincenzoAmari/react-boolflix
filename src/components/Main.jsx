@@ -1,4 +1,3 @@
-// src/components/Main.jsx
 import React, { useContext } from "react";
 import { MovieContext } from "../context/MovieContext";
 import Header from "./Header";

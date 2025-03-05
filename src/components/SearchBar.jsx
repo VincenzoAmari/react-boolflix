@@ -1,4 +1,3 @@
-// src/components/SearchBar.jsx
 import React, { useContext, useState } from "react";
 import { MovieContext } from "../context/MovieContext";
 import axios from "axios";
