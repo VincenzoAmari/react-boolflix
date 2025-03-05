@@ -1,19 +1,17 @@
-import Header from "./components/Header";
-import Filters from "./components/Filters/SearchBar";
-import FilterSelect from "./components/Filters/FilterSelect";
+// src/App.jsx
+import React from "react";
+import { MovieProvider } from "./context/MovieContext";
 import Main from "./components/Main";
+import "./index.css";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <Header />
-      <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-        <Filters />
-        <FilterSelect />
+    <MovieProvider>
+      <div className="App">
+        <Main />
       </div>
-      <Main />
-    </div>
+    </MovieProvider>
   );
-};
+}
 
 export default App;

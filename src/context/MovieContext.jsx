@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+// src/context/MovieContext.jsx
+import React, { createContext, useState } from "react";
 
 export const MovieContext = createContext();
 
@@ -7,6 +8,7 @@ export const MovieProvider = ({ children }) => {
   const [series, setSeries] = useState([]);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState("");
 
   return (
@@ -20,6 +22,8 @@ export const MovieProvider = ({ children }) => {
         setSearch,
         isLoading,
         setIsLoading,
+        isSearching,
+        setIsSearching,
         selectedGenre,
         setSelectedGenre,
       }}
