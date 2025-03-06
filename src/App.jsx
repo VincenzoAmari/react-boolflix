@@ -9,6 +9,7 @@ const App = () => {
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
+  const [popularSeries, setPopularSeries] = useState([]); // Aggiunta per le serie popolari
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState("");
@@ -17,6 +18,7 @@ const App = () => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
+    // Funzione per ottenere i film popolari
     const fetchPopularMovies = async () => {
       setIsLoading(true);
       try {
@@ -31,7 +33,24 @@ const App = () => {
       }
     };
 
+    // Funzione per ottenere le serie TV popolari
+    const fetchPopularSeries = async () => {
+      setIsLoading(true);
+      try {
+        const res = await axios.get(`${API_URL}/tv/popular`, {
+          params: { api_key: API_KEY, language: "it-IT" },
+        });
+        setPopularSeries(res.data.results); // Salviamo le serie popolari
+      } catch (error) {
+        console.error("Errore nel caricamento delle serie popolari:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Carichiamo sia i film che le serie
     fetchPopularMovies();
+    fetchPopularSeries();
   }, []);
 
   return (
@@ -42,6 +61,8 @@ const App = () => {
         series,
         setSeries,
         popularMovies,
+        setPopularMovies,
+        popularSeries,
         search,
         setSearch,
         isLoading,

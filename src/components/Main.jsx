@@ -4,7 +4,7 @@ import ResultSection from "./ResultSection";
 import Loader from "./Loader";
 
 const Main = () => {
-  const { movies, series, popularMovies, isLoading, search } =
+  const { movies, popularMovies, popularSeries, isLoading, search } =
     useContext(MovieContext);
 
   return (
@@ -12,18 +12,18 @@ const Main = () => {
       {isLoading && <Loader />}
 
       {/* Sezione Film */}
-      <div className="h-[30vh]">
+      <div className="h-[50vh]">
         <ResultSection
           title={search ? "Film Ricercati" : "Film più Popolari"}
           items={search ? movies : popularMovies}
         />
       </div>
 
-      {/* Sezione Serie TV */}
-      <div className="h-[30vh] mt-8 tv-section">
+      {/* Sezione Serie */}
+      <div className="h-[50vh] mt-8">
         <ResultSection
-          title={search ? "Serie TV Ricercate" : "Serie TV più Popolari"}
-          items={search ? series : popularMovies}
+          title={search ? "Serie Ricercate" : "Serie più Popolari"}
+          items={search ? [] : popularSeries}
         />
       </div>
     </main>
