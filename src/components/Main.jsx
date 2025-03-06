@@ -4,20 +4,19 @@ import ResultSection from "./ResultSection";
 import Loader from "./Loader";
 
 const Main = () => {
-  const { movies, series, popularMovies, isLoading, search } =
-    useContext(MovieContext);
+  const { movies, popularMovies, isLoading, search } = useContext(MovieContext);
 
   return (
-    <main>
+    <main className="h-screen bg-gray-900 text-white p-4">
       {isLoading && <Loader />}
-      {search ? (
-        <>
-          <ResultSection title="Film Ricercati" items={movies} />
-          <ResultSection title="Serie TV Ricercate" items={series} />
-        </>
-      ) : (
-        <ResultSection title="Film più Popolari" items={popularMovies} />
-      )}
+
+      {/* Sezione Film */}
+      <div className="h-[50vh]">
+        <ResultSection
+          title={search ? "Film Ricercati" : "Film più Popolari"}
+          items={search ? movies : popularMovies}
+        />
+      </div>
     </main>
   );
 };
