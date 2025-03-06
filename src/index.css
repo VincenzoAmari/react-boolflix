@@ -35,8 +35,9 @@ body {
 
 /* --- Stile per la card del film --- */
 .movie-card {
-  min-width: 250px; /* Riduci la larghezza minima della card */
+  min-width: 300px; /* Riduci la larghezza minima della card */
   max-width: 300px; /* Imposta una larghezza massima per evitare che la card sia troppo grande */
+  min-height: 400px;
   background-color: #222;
   border-radius: 10px;
   overflow: hidden;
@@ -62,4 +63,63 @@ body {
 
 .scroll-container::-webkit-scrollbar {
   display: none; /* Nasconde scrollbar su Chrome/Safari */
+}
+.movie-card {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease-in-out;
+}
+
+.movie-card .info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Sfondo scuro per l'hover */
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-card:hover .info {
+  opacity: 1; /* Mostra le informazioni quando viene fatta l'hover */
+}
+
+.movie-card .info .details {
+  text-align: center;
+}
+
+.movie-card .info .language {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.movie-card .info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.movie-card .info .stars {
+  font-size: 1.5rem;
+  color: #ccc;
+}
+
+.movie-card .info .stars .filled {
+  color: gold;
 }
