@@ -5,12 +5,24 @@ const Card = ({ item }) => {
     ? `https://image.tmdb.org/t/p/w342${item.poster_path}`
     : "https://via.placeholder.com/200x300?text=No+Image";
 
-  const languageFlag =
-    item.original_language === "it"
-      ? "🇮🇹"
-      : item.original_language === "en"
-      ? "🇬🇧"
-      : "🏳️"; // Bandiera generica se non esiste una bandiera per la lingua
+  const languageMap = {
+    en: "gb", // Inglese → Regno Unito
+    ja: "jp", // Giapponese → Giappone
+    zh: "cn", // Cinese → Cina
+    ko: "kr", // Coreano → Corea del Sud
+    es: "es", // Spagnolo → Spagna
+    fr: "fr", // Francese → Francia
+    de: "de", // Tedesco → Germania
+    ru: "ru", // Russo → Russia
+    hi: "in", // Hindi → India
+    // Aggiungi altre correzioni se necessario
+  };
+
+  const languageCode = item.original_language
+    ? item.original_language.toLowerCase()
+    : "xx";
+  const flagCode = languageMap[languageCode] || languageCode; // Se esiste nella mappa, usa il codice corretto
+  const flagUrl = `https://flagcdn.com/w40/${flagCode}.png`;
 
   const voteStars = Math.round(item.vote_average / 2); // Converte il voto da 1-10 a 1-5 stelle
 
@@ -21,8 +33,11 @@ const Card = ({ item }) => {
       {/* La parte che viene mostrata al passaggio del mouse */}
       <div className="info">
         <div className="details">
-          <p className="language">{languageFlag}</p>
+          <img className="flag" src={flagUrl} alt={item.original_language} />
           <h3>{item.title || item.name}</h3>
+          <p className="original-title">
+            Titolo originale: {item.original_title || item.name}
+          </p>
           <div className="stars">
             {[...Array(5)].map((_, index) => (
               <span key={index} className={index < voteStars ? "filled" : ""}>
@@ -30,6 +45,11 @@ const Card = ({ item }) => {
               </span>
             ))}
           </div>
+          <p className="overview">
+            {item.overview
+              ? item.overview.slice(0, 100) + "..."
+              : "Nessuna descrizione disponibile."}
+          </p>
         </div>
       </div>
     </div>
