@@ -6,16 +6,15 @@ const Card = ({ item }) => {
     : "https://via.placeholder.com/200x300?text=No+Image";
 
   const languageMap = {
-    en: "gb", // Inglese → Regno Unito
-    ja: "jp", // Giapponese → Giappone
-    zh: "cn", // Cinese → Cina
-    ko: "kr", // Coreano → Corea del Sud
-    es: "es", // Spagnolo → Spagna
-    fr: "fr", // Francese → Francia
-    de: "de", // Tedesco → Germania
-    ru: "ru", // Russo → Russia
-    hi: "in", // Hindi → India
-    // Aggiungi altre correzioni se necessario
+    en: "gb", //  Regno Unito
+    ja: "jp", //  Giappone
+    zh: "cn", //  Cina
+    ko: "kr", //  Corea del Sud
+    es: "es", //  Spagna
+    fr: "fr", //  Francia
+    de: "de", //  Germania
+    ru: "ru", //  Russia
+    hi: "in", //  India
   };
 
   const languageCode = item.original_language
