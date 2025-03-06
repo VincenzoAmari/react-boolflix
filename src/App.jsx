@@ -19,56 +19,102 @@ const App = () => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const fetchPopularMovies = async () => {
+    const fetchPopularMovies = () => {
       setIsLoading(true);
-      try {
-        const res = await axios.get(`${API_URL}/movie/popular`, {
+      axios
+        .get(`${API_URL}/movie/popular`, {
           params: { api_key: API_KEY, language: "it-IT" },
+        })
+        .then((res) => {
+          setPopularMovies(res.data.results);
+        })
+        .catch((error) => {
+          console.error("Errore nel caricamento dei film popolari:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
-        setPopularMovies(res.data.results);
-      } catch (error) {
-        console.error("Errore nel caricamento dei film popolari:", error);
-      } finally {
-        setIsLoading(false);
-      }
     };
 
-    const fetchPopularSeries = async () => {
+    const fetchPopularSeries = () => {
       setIsLoading(true);
-      try {
-        const res = await axios.get(`${API_URL}/tv/popular`, {
+      axios
+        .get(`${API_URL}/tv/popular`, {
           params: { api_key: API_KEY, language: "it-IT" },
+        })
+        .then((res) => {
+          setPopularSeries(res.data.results);
+        })
+        .catch((error) => {
+          console.error("Errore nel caricamento delle serie popolari:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
-        setPopularSeries(res.data.results);
-      } catch (error) {
-        console.error("Errore nel caricamento delle serie popolari:", error);
-      } finally {
-        setIsLoading(false);
-      }
     };
 
-    const fetchGenres = async () => {
-      try {
-        const [movieGenresRes, seriesGenresRes] = await Promise.all([
+    const fetchGenres = () => {
+      axios
+        .all([
           axios.get(`${API_URL}/genre/movie/list`, {
             params: { api_key: API_KEY, language: "it-IT" },
           }),
           axios.get(`${API_URL}/genre/tv/list`, {
             params: { api_key: API_KEY, language: "it-IT" },
           }),
-        ]);
-        setGenres({
-          movies: movieGenresRes.data.genres,
-          series: seriesGenresRes.data.genres,
+        ])
+        .then(
+          axios.spread((movieGenresRes, seriesGenresRes) => {
+            setGenres({
+              movies: movieGenresRes.data.genres,
+              series: seriesGenresRes.data.genres,
+            });
+          })
+        )
+        .catch((error) => {
+          console.error("Errore nel caricamento dei generi:", error);
         });
-      } catch (error) {
-        console.error("Errore nel caricamento dei generi:", error);
-      }
+    };
+
+    const fetchAllMovies = () => {
+      setIsLoading(true);
+      axios
+        .get(`${API_URL}/discover/movie`, {
+          params: { api_key: API_KEY, language: "it-IT" },
+        })
+        .then((res) => {
+          setMovies(res.data.results);
+        })
+        .catch((error) => {
+          console.error("Errore nel caricamento di tutti i film:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    };
+
+    const fetchAllSeries = () => {
+      setIsLoading(true);
+      axios
+        .get(`${API_URL}/discover/tv`, {
+          params: { api_key: API_KEY, language: "it-IT" },
+        })
+        .then((res) => {
+          setSeries(res.data.results);
+        })
+        .catch((error) => {
+          console.error("Errore nel caricamento di tutte le serie:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     };
 
     fetchPopularMovies();
     fetchPopularSeries();
     fetchGenres();
+    fetchAllMovies();
+    fetchAllSeries();
   }, []);
 
   return (

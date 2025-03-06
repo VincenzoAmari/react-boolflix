@@ -14,7 +14,7 @@ const Main = () => {
     series,
   } = useContext(MovieContext);
 
-  // Filtro dei film e delle serie in base al genere
+  // Usa i film e le serie completi, non solo i popolari
   const allMovies = search ? movies : popularMovies;
   const allSeries = search ? series : popularSeries;
 
@@ -37,7 +37,7 @@ const Main = () => {
       {/* Sezione Film */}
       <div className="h-[50vh]">
         <ResultSection
-          title={search ? "Film Ricercati" : "Film più Popolari"}
+          title={search ? "Film Ricercati" : "Tutti i Film"}
           items={filteredMovies}
         />
       </div>
@@ -45,7 +45,7 @@ const Main = () => {
       {/* Sezione Serie */}
       <div className="h-[50vh] mt-8">
         <ResultSection
-          title={search ? "Serie Ricercate" : "Serie più Popolari"}
+          title={search ? "Serie Ricercate" : "Tutte le Serie"}
           items={filteredSeries}
         />
       </div>
