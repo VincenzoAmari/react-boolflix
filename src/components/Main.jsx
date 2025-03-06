@@ -1,18 +1,16 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { MovieContext } from "../context/MovieContext";
-import Header from "./Header";
-import Filters from "./Filters";
 import ResultSection from "./ResultSection";
 import Loader from "./Loader";
 
 const Main = () => {
-  const { isLoading } = useContext(MovieContext);
+  const { movies, series, isLoading } = useContext(MovieContext);
 
   return (
-    <main className="main">
-      <Header />
-      <Filters />
-      {isLoading ? <Loader /> : <ResultSection />}
+    <main>
+      {isLoading && <Loader />}
+      <ResultSection title="Film" items={movies} />
+      <ResultSection title="Serie TV" items={series} />
     </main>
   );
 };

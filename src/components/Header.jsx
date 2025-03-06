@@ -1,12 +1,7 @@
-// src/components/Header.jsx
-import React from "react";
-import SearchBar from "./SearchBar";
-
 const Header = () => {
   return (
-    <header className="header">
+    <header style={{ textAlign: "center", padding: "20px", fontSize: "24px" }}>
       <h1>BoolFlix</h1>
-      <SearchBar />
     </header>
   );
 };

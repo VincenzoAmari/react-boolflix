@@ -1,25 +1,15 @@
-import React, { useContext } from "react";
-import { MovieContext } from "../context/MovieContext";
 import Card from "./Card";
 
-const ResultSection = () => {
-  const { movies, series, selectedGenre } = useContext(MovieContext);
-
-  const filterByGenre = (item) => {
-    if (!selectedGenre) return true;
-
-    return item.genre_ids?.includes(selectedGenre) || true;
-  };
-
+const ResultSection = ({ title, items }) => {
   return (
-    <div className="result-section">
-      {movies.filter(filterByGenre).map((movie) => (
-        <Card key={movie.id} media={movie} type="movie" />
-      ))}
-      {series.filter(filterByGenre).map((show) => (
-        <Card key={show.id} media={show} type="series" />
-      ))}
-    </div>
+    <section>
+      <h2>{title}</h2>
+      <div className="grid">
+        {items.map((item) => (
+          <Card key={item.id} item={item} />
+        ))}
+      </div>
+    </section>
   );
 };
 
