@@ -9,7 +9,8 @@ const App = () => {
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
-  const [popularSeries, setPopularSeries] = useState([]); // Aggiunta per le serie popolari
+  const [popularSeries, setPopularSeries] = useState([]);
+  const [genres, setGenres] = useState({ movies: [], series: [] }); // Aggiungiamo i generi
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState("");
@@ -18,7 +19,6 @@ const App = () => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    // Funzione per ottenere i film popolari
     const fetchPopularMovies = async () => {
       setIsLoading(true);
       try {
@@ -33,14 +33,13 @@ const App = () => {
       }
     };
 
-    // Funzione per ottenere le serie TV popolari
     const fetchPopularSeries = async () => {
       setIsLoading(true);
       try {
         const res = await axios.get(`${API_URL}/tv/popular`, {
           params: { api_key: API_KEY, language: "it-IT" },
         });
-        setPopularSeries(res.data.results); // Salviamo le serie popolari
+        setPopularSeries(res.data.results);
       } catch (error) {
         console.error("Errore nel caricamento delle serie popolari:", error);
       } finally {
@@ -48,9 +47,28 @@ const App = () => {
       }
     };
 
-    // Carichiamo sia i film che le serie
+    const fetchGenres = async () => {
+      try {
+        const [movieGenresRes, seriesGenresRes] = await Promise.all([
+          axios.get(`${API_URL}/genre/movie/list`, {
+            params: { api_key: API_KEY, language: "it-IT" },
+          }),
+          axios.get(`${API_URL}/genre/tv/list`, {
+            params: { api_key: API_KEY, language: "it-IT" },
+          }),
+        ]);
+        setGenres({
+          movies: movieGenresRes.data.genres,
+          series: seriesGenresRes.data.genres,
+        });
+      } catch (error) {
+        console.error("Errore nel caricamento dei generi:", error);
+      }
+    };
+
     fetchPopularMovies();
     fetchPopularSeries();
+    fetchGenres(); // Aggiungiamo il caricamento dei generi
   }, []);
 
   return (
@@ -61,8 +79,8 @@ const App = () => {
         series,
         setSeries,
         popularMovies,
-        setPopularMovies,
         popularSeries,
+        genres,
         search,
         setSearch,
         isLoading,
