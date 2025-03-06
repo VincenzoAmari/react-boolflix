@@ -1,17 +1,27 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import { MovieContext } from "../../context/MovieContext";
 
 const SearchBar = () => {
-  const { setMovies, setSeries, setIsLoading, search, setSearch } =
-    useContext(MovieContext);
+  const {
+    setMovies,
+    setSeries,
+    setIsLoading,
+    search,
+    setSearch,
+    popularMovies,
+    setMovies: setFilteredMovies,
+  } = useContext(MovieContext);
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_URL = import.meta.env.VITE_API_URL;
 
   const fetchResults = async () => {
-    if (!search) return;
-    setIsLoading(true);
+    if (!search) {
+      setFilteredMovies(popularMovies);
+      return;
+    }
 
+    setIsLoading(true);
     try {
       const [moviesRes, seriesRes] = await Promise.all([
         axios.get(`${API_URL}/search/movie`, {
