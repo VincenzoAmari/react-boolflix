@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import { MovieContext } from "./context/MovieContext";
 import axios from "axios";
-import "./styles.css";
+import "./index.css";
 
 const App = () => {
   const [movies, setMovies] = useState([]);

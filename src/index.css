@@ -35,16 +35,31 @@ body {
 
 /* --- Stile per la card del film --- */
 .movie-card {
-  min-width: 400px;
-  width: 200px;
+  min-width: 250px; /* Riduci la larghezza minima della card */
+  max-width: 300px; /* Imposta una larghezza massima per evitare che la card sia troppo grande */
   background-color: #222;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease; /* Aggiungi un po' di transizione al passaggio del mouse */
 }
 
 .movie-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* --- Contenitore dello scroll orizzontale --- */
+.scroll-container {
+  display: flex;
+  gap: 15px; /* Riduci il gap tra le card */
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+  scrollbar-width: none; /* Nasconde scrollbar su Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Nasconde scrollbar su Chrome/Safari */
 }
