@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import axios from "axios";
+import { useContext, useEffect } from "react";
 import { MovieContext } from "../../context/MovieContext";
+import axios from "axios";
 
 const SearchBar = () => {
   const {
@@ -10,35 +10,45 @@ const SearchBar = () => {
     search,
     setSearch,
     popularMovies,
-    setMovies: setFilteredMovies,
   } = useContext(MovieContext);
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_URL = import.meta.env.VITE_API_URL;
 
-  const fetchResults = async () => {
+  // Funzione per la ricerca
+  const fetchResults = () => {
     if (!search) {
-      setFilteredMovies(popularMovies);
+      setMovies(popularMovies);
+      setSeries([]);
       return;
     }
 
     setIsLoading(true);
-    try {
-      const [moviesRes, seriesRes] = await Promise.all([
-        axios.get(`${API_URL}/search/movie`, {
-          params: { api_key: API_KEY, query: search, language: "it-IT" },
-        }),
-        axios.get(`${API_URL}/search/tv`, {
-          params: { api_key: API_KEY, query: search, language: "it-IT" },
-        }),
-      ]);
-      setMovies(moviesRes.data.results);
-      setSeries(seriesRes.data.results);
-    } catch (error) {
-      console.error("Errore nella ricerca:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    axios
+      .get(`${API_URL}/search/movie`, {
+        params: { api_key: API_KEY, query: search, language: "it-IT" },
+      })
+      .then((moviesRes) => {
+        setMovies(moviesRes.data.results);
+      })
+      .catch((error) => console.error("Errore nella ricerca film:", error));
+
+    axios
+      .get(`${API_URL}/search/tv`, {
+        params: { api_key: API_KEY, query: search, language: "it-IT" },
+      })
+      .then((seriesRes) => {
+        setSeries(seriesRes.data.results);
+      })
+      .catch((error) => console.error("Errore nella ricerca serie:", error))
+      .finally(() => setIsLoading(false));
   };
+
+  // Debounce per la ricerca
+  useEffect(() => {
+    const timeoutId = setTimeout(fetchResults, 500);
+
+    return () => clearTimeout(timeoutId); // Pulizia al termine
+  }, [search]);
 
   return (
     <div>
@@ -48,7 +58,6 @@ const SearchBar = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button onClick={fetchResults}>Cerca</button>
     </div>
   );
 };

@@ -20,7 +20,7 @@ const Card = ({ item }) => {
   const languageCode = item.original_language
     ? item.original_language.toLowerCase()
     : "xx";
-  const flagCode = languageMap[languageCode] || languageCode; // Se esiste nella mappa, usa il codice corretto
+  const flagCode = languageMap[languageCode] || languageCode;
   const flagUrl = `https://flagcdn.com/w40/${flagCode}.png`;
 
   const voteStars = Math.round(item.vote_average / 2); // Converte il voto da 1-10 a 1-5 stelle
@@ -29,7 +29,6 @@ const Card = ({ item }) => {
     <div className="movie-card">
       <img src={imgUrl} alt={item.title || item.name} />
 
-      {/* La parte che viene mostrata al passaggio del mouse */}
       <div className="info">
         <div className="details">
           <img className="flag" src={flagUrl} alt={item.original_language} />

@@ -10,7 +10,7 @@ const App = () => {
   const [series, setSeries] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [popularSeries, setPopularSeries] = useState([]);
-  const [genres, setGenres] = useState({ movies: [], series: [] }); // Aggiungiamo i generi
+  const [genres, setGenres] = useState({ movies: [], series: [] });
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState("");
@@ -68,7 +68,7 @@ const App = () => {
 
     fetchPopularMovies();
     fetchPopularSeries();
-    fetchGenres(); // Aggiungiamo il caricamento dei generi
+    fetchGenres();
   }, []);
 
   return (

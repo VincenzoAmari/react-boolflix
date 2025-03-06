@@ -7,7 +7,7 @@ const ResultSection = ({ title, items }) => {
   // Scroll con la rotellina del mouse
   const handleScroll = (event) => {
     if (scrollRef.current) {
-      scrollRef.current.scrollLeft += event.deltaY * 2; // Scroll più fluido
+      scrollRef.current.scrollLeft += event.deltaY * 2;
       event.preventDefault();
     }
   };
@@ -16,10 +16,10 @@ const ResultSection = ({ title, items }) => {
     <section>
       <h2 className="section-title">{title}</h2>
       <div ref={scrollRef} onWheel={handleScroll} className="scroll-container">
-        {items.length > 0 ? (
-          items.map((item) => <Card key={item.id} item={item} />)
-        ) : (
+        {items.length === 0 ? (
           <p>Nessun risultato trovato</p>
+        ) : (
+          items.map((item) => <Card key={item.id} item={item} />)
         )}
       </div>
     </section>

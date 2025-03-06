@@ -11,20 +11,24 @@ const Main = () => {
     isLoading,
     search,
     selectedGenre,
+    series,
   } = useContext(MovieContext);
 
   // Filtro dei film e delle serie in base al genere
+  const allMovies = search ? movies : popularMovies;
+  const allSeries = search ? series : popularSeries;
+
   const filteredMovies = selectedGenre
-    ? popularMovies.filter((movie) =>
+    ? allMovies.filter((movie) =>
         movie.genre_ids.includes(Number(selectedGenre))
       )
-    : popularMovies;
+    : allMovies;
 
   const filteredSeries = selectedGenre
-    ? popularSeries.filter((series) =>
+    ? allSeries.filter((series) =>
         series.genre_ids.includes(Number(selectedGenre))
       )
-    : popularSeries;
+    : allSeries;
 
   return (
     <main className="h-screen bg-gray-900 text-white p-4">
@@ -34,7 +38,7 @@ const Main = () => {
       <div className="h-[50vh]">
         <ResultSection
           title={search ? "Film Ricercati" : "Film più Popolari"}
-          items={search ? movies : filteredMovies}
+          items={filteredMovies}
         />
       </div>
 
@@ -42,7 +46,7 @@ const Main = () => {
       <div className="h-[50vh] mt-8">
         <ResultSection
           title={search ? "Serie Ricercate" : "Serie più Popolari"}
-          items={search ? [] : filteredSeries}
+          items={filteredSeries}
         />
       </div>
     </main>
