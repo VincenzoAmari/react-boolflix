@@ -23,7 +23,7 @@ const Card = ({ item }) => {
   const flagCode = languageMap[languageCode] || languageCode;
   const flagUrl = `https://flagcdn.com/w40/${flagCode}.png`;
 
-  const voteStars = Math.round(item.vote_average / 2); // Converte il voto da 1-10 a 1-5 stelle
+  const voteStars = Math.ceil(item.vote_average / 2); // Converte il voto da 1-10 a 1-5 stelle
 
   return (
     <div className="movie-card">
